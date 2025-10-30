@@ -33,3 +33,4 @@ npm run dev
 2. Open the URL printed by Vite (usually http://localhost:5173). The catalog shows items and a Cart summary on the right for desktop.
 
 3. Use the quantity pickers to add items — totals update live and persist across the page since a Cart context stores quantities.
+"# 109" 
