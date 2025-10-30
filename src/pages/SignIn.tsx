@@ -1,14 +1,19 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useUser } from '../context/UserContext'
 
 export default function SignIn(){
   const navigate = useNavigate()
+  const { login } = useUser()
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
 
   function handleSubmit(e: React.FormEvent){
     e.preventDefault()
-    // mock sign in - just navigate back to catalog
+    // Mock sign in - in a real app, you would validate credentials
+    const isAdmin = email.toLowerCase().includes('admin')
+    const username = email.split('@')[0] // Use part before @ as username
+    login(username, isAdmin)
     navigate('/catalog')
   }
 
