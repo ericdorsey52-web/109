@@ -11,6 +11,7 @@ export default function Nav() {
             <Link to="/catalog" className="hover:underline">Catalog</Link>
             <Link to="/cart" className="hover:underline">Cart</Link>
             <Link to="/about" className="hover:underline">About</Link>
+            <Link to="/admin" className="hover:underline">Admin</Link>
           </nav>
         </div>
         <div className="hidden md:flex items-center gap-3">

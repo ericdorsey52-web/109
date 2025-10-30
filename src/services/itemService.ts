@@ -6,7 +6,7 @@ export type Item = {
   imageUrl: string
 }
 
-const items: Item[] = [
+const DEFAULT_ITEMS: Item[] = [
   {
     id: 'power-tee',
     name: 'Power Tee',
@@ -37,7 +37,29 @@ const items: Item[] = [
   }
 ]
 
+const STORAGE_KEY = 'lh_products'
+
+let items: Item[] = (() => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (raw) return JSON.parse(raw)
+  } catch {}
+  return DEFAULT_ITEMS.slice()
+})()
+
+function persist(){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)) } catch {}
+}
+
 export function fetchItems(): Promise<Item[]>{
   // emulate async
-  return new Promise((res) => setTimeout(() => res(items), 200))
+  return new Promise((res) => setTimeout(() => res(items.slice()), 200))
+}
+
+export function addItem(newItem: Omit<Item,'id'>): Promise<Item>{
+  const id = (newItem.name || 'item').toLowerCase().replace(/[^a-z0-9]+/g,'-') + '-' + Date.now().toString(36)
+  const item: Item = { id, ...newItem }
+  items.push(item)
+  persist()
+  return Promise.resolve(item)
 }
